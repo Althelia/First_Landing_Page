@@ -1,4 +1,3 @@
-# First_Landing_Page
 
 PIXOPET LANDING PAGE
 ====================
