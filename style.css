@@ -1,0 +1,987 @@
+/*
+  PIXOPET — style.css
+  ===================
+  PURPOSE: Controls how the site looks (colors, spacing, layout, borders, mobile layout).
+
+  CONTENT EDITORS: Change text/images in index.html — not here.
+  DESIGN EDITORS: Start with :root variables below, then find the section you need.
+
+  SECTION MAP (search for these labels):
+  - :root          → Site colors, fonts, shadows (change once, updates whole site)
+  - Floating pets  → Background decoration sprites
+  - Navbar         → Sticky header, blur, mobile menu panel
+  - Hero           → 60/40 split, mockup frames, CTA buttons
+  - Features       → Bento grid cards, asset panels, carousel area
+  - About          → Alternating image/text rows, highlights box
+  - Pricing        → Plan cards, featured (larger) Premium tier, price display
+  - Footer         → Contact area, social buttons
+  - Responsive     → @media rules for tablet and phone (bottom of file)
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap');
+
+/* =====================
+   :root — GLOBAL THEME (edit colors/fonts here first)
+   Changes: --primary-color, --secondary-color, --text-body, --bg-* gradients
+===================== */
+:root {
+    --primary-color: #ff5fa2;
+    --secondary-color: #7c73e6;
+    --light-pink: #ffd6e8;
+    --light-purple: #cdb4db;
+    --bg-light: #fff7ed;
+    --bg-hero: linear-gradient(135deg, #e0f7fa 0%, #fce7f3 100%);
+    --bg-features: linear-gradient(180deg, #ffffff 0%, #fef6ff 100%);
+    --bg-about: linear-gradient(135deg, #fce7f3 0%, #ffe4f1 100%);
+    --bg-pricing: linear-gradient(180deg, #e0f2fe 0%, #e0f7fa 100%);
+    --text-dark: #5a2a3c;
+    --text-body: #2C1B3D;
+    --accent-pink: #ffb3c6;
+    --accent-gold: #ffd700;
+    --border-dark: #1a1a1a;
+    --border-size: 3px;
+    --shadow-brutal: 5px 5px 0 0 var(--border-dark);
+    --shadow-brutal-sm: 3px 3px 0 0 var(--border-dark);
+    --asset-bg: linear-gradient(145deg, #fff5fb 0%, #f3e8ff 100%);
+    --transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    --font-pixel: 'Press Start 2P', cursive;
+    --font-body: 'Nunito', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    line-height: 1.8;
+    color: var(--text-body);
+    background-color: var(--bg-light);
+    overflow-x: hidden;
+}
+
+/* Pixel font: ONLY main titles (logo h1, section h2). Body uses Nunito below. */
+h1, h2 {
+    font-family: var(--font-pixel);
+    letter-spacing: 1px;
+}
+
+h3, h4, h5, h6 {
+    font-family: var(--font-body);
+    font-weight: 800;
+    color: var(--text-body);
+}
+
+p, li, a, button, span {
+    font-family: var(--font-body);
+}
+
+/* =====================
+   FLOATING PETS — decorative background (images set in index.html)
+   Change: .float-pet--1 through --4 for position/animation; opacity in .float-pet
+===================== */
+.parallax-pets {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.float-pet {
+    position: absolute;
+    width: 56px;
+    height: auto;
+    opacity: 0.35;
+    image-rendering: pixelated;
+    filter: drop-shadow(2px 2px 0 rgba(26, 26, 26, 0.2));
+}
+
+.float-pet--1 {
+    top: 18%;
+    left: 4%;
+    animation: floatPet 7s ease-in-out infinite;
+}
+
+.float-pet--2 {
+    top: 42%;
+    right: 6%;
+    width: 48px;
+    animation: floatPet 9s ease-in-out infinite 1s;
+}
+
+.float-pet--3 {
+    bottom: 28%;
+    left: 8%;
+    width: 44px;
+    animation: floatPet 8s ease-in-out infinite 2s;
+}
+
+.float-pet--4 {
+    bottom: 12%;
+    right: 10%;
+    width: 52px;
+    animation: floatPet 6.5s ease-in-out infinite 0.5s;
+}
+
+@keyframes floatPet {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-18px) rotate(3deg); }
+}
+
+/* =====================
+   NAVBAR — sticky header with blur (menu links styled in .nav-links)
+   Mobile dropdown: .nav-links.active (toggled by script.js)
+===================== */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(255, 214, 232, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: var(--border-size) solid var(--border-dark);
+    box-shadow: var(--shadow-brutal-sm);
+}
+
+.logo {
+    font-size: 22px;
+    color: var(--primary-color);
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-links li a {
+    color: var(--secondary-color);
+    font-size: 14px;
+    font-weight: 700;
+    padding: 8px 14px;
+    text-decoration: none;
+    transition: var(--transition);
+    border-radius: 6px;
+}
+
+.nav-links li a:hover,
+.nav-links li a:focus {
+    color: var(--primary-color);
+    background: rgba(255, 95, 162, 0.15);
+    outline: none;
+}
+
+.menu-btn {
+    display: none;
+    font-size: 24px;
+    background: var(--primary-color);
+    border: var(--border-size) solid var(--border-dark);
+    box-shadow: var(--shadow-brutal-sm);
+    cursor: pointer;
+    color: white;
+    padding: 6px 12px;
+    transition: var(--transition);
+}
+
+.menu-btn:hover,
+.menu-btn:focus {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 0 var(--border-dark);
+    outline: none;
+}
+
+main {
+    position: relative;
+    z-index: 1;
+}
+
+/* =====================
+   HERO — 60% text left, 40% mockups right (content in index.html #home)
+   Mockup frames: .device--desktop, .device--mobile | Buttons: .primary-btn, .secondary-btn
+===================== */
+.hero {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 4rem 3rem;
+    background: var(--bg-hero);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-text {
+    animation: slideInUp 0.8s ease-out;
+}
+
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-text h2 {
+    color: var(--primary-color);
+    margin-bottom: 12px;
+    font-size: clamp(20px, 3vw, 32px);
+    line-height: 1.4;
+}
+
+.hero-tagline {
+    font-size: clamp(18px, 2.2vw, 24px);
+    font-weight: 800;
+    color: var(--secondary-color);
+    margin-bottom: 18px;
+    line-height: 1.4;
+}
+
+.hero-description {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-body);
+    margin-bottom: 24px;
+    max-width: 52ch;
+}
+
+.hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Hero device mockup — border/shadow on .device; screens use .device-screen img */
+.hero-mockup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mockup-stack {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    min-height: 320px;
+}
+
+.device {
+    background: #fff;
+    border: var(--border-size) solid var(--border-dark);
+    box-shadow: var(--shadow-brutal);
+    overflow: hidden;
+}
+
+.device--desktop {
+    width: 100%;
+    border-radius: 10px;
+    transform: rotate(-2deg);
+    transition: transform 0.4s ease;
+}
+
+.device--mobile {
+    position: absolute;
+    right: -8px;
+    bottom: -12px;
+    width: 38%;
+    max-width: 130px;
+    border-radius: 18px;
+    transform: rotate(4deg);
+    transition: transform 0.4s ease;
+    animation: float 4s ease-in-out infinite;
+}
+
+.mockup-stack:hover .device--desktop {
+    transform: rotate(-1deg) translateY(-4px);
+}
+
+.mockup-stack:hover .device--mobile {
+    transform: rotate(6deg) translateY(-8px);
+}
+
+.device-chrome {
+    display: flex;
+    gap: 6px;
+    padding: 10px 12px;
+    background: var(--light-pink);
+    border-bottom: var(--border-size) solid var(--border-dark);
+}
+
+.device-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    border: 2px solid var(--border-dark);
+}
+
+.device-notch {
+    width: 40%;
+    height: 6px;
+    margin: 8px auto 4px;
+    background: var(--border-dark);
+    border-radius: 4px;
+}
+
+.device-screen {
+    background: var(--asset-bg);
+    aspect-ratio: 16 / 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.device--mobile .device-screen {
+    aspect-ratio: 9 / 14;
+    padding: 8px;
+}
+
+.device-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.device--mobile .device-screen img {
+    object-fit: contain;
+}
+
+@keyframes float {
+    0%, 100% { transform: rotate(4deg) translateY(0); }
+    50% { transform: rotate(4deg) translateY(-10px); }
+}
+
+/* =====================
+   BUTTONS — 3px border + flat shadow (hero CTAs + pricing .price-btn)
+===================== */
+.primary-btn,
+.secondary-btn,
+.price-btn {
+    padding: 14px 28px;
+    border: var(--border-size) solid var(--border-dark);
+    box-shadow: var(--shadow-brutal);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: var(--transition);
+    border-radius: 8px;
+}
+
+.primary-btn {
+    background: var(--primary-color);
+    color: white;
+}
+
+.secondary-btn {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.primary-btn:hover,
+.primary-btn:focus,
+.secondary-btn:hover,
+.secondary-btn:focus,
+.price-btn:hover,
+.price-btn:focus {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0 0 var(--border-dark);
+    outline: none;
+}
+
+.primary-btn:active,
+.secondary-btn:active,
+.price-btn:active {
+    transform: translate(5px, 5px);
+    box-shadow: none;
+}
+
+/* =====================
+   FEATURES — Bento grid (#features in index.html)
+   Layout: .bento-card--pet (wide), --decorate, --care | Images sit in .asset-panel
+   Carousel image: #pet-feature-img (rotation timing in script.js)
+===================== */
+.features {
+    padding: 4rem 3rem;
+    text-align: center;
+    background: var(--bg-features);
+}
+
+.features h2 {
+    color: var(--primary-color);
+    margin-bottom: 2.5rem;
+    font-size: clamp(20px, 3vw, 32px);
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: minmax(120px, auto);
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.bento-card {
+    padding: 22px;
+    background: #fff;
+    border: var(--border-size) solid var(--border-dark);
+    box-shadow: var(--shadow-brutal);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.bento-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 0 var(--border-dark);
+}
+
+.bento-card--pet {
+    grid-column: span 4;
+    grid-row: span 2;
+}
+
+.bento-card--decorate,
+.bento-card--care {
+    grid-column: span 2;
+}
+
+.bento-card h3 {
+    color: var(--secondary-color);
+    margin: 14px 0 8px;
+    font-size: 20px;
+}
+
+.bento-card p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-body);
+}
+
+/* Unified image backgrounds — keeps feature art on matching card color */
+.asset-panel {
+    background: var(--asset-bg);
+    border: var(--border-size) solid var(--border-dark);
+    box-shadow: var(--shadow-brutal-sm);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 140px;
+    padding: 12px;
+}
+
+.asset-panel img {
+    max-width: 100%;
+    max-height: 160px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.asset-panel--carousel {
+    flex: 1;
+    min-height: 200px;
+}
+
+.pet-image-container {
+    width: 100%;
+    height: 100%;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pet-image-container img,
+#pet-feature-img {
+    max-height: 180px;
+    width: auto;
+    object-fit: contain;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.bento-card--decorate .asset-panel img,
+.bento-card--care .asset-panel img {
+    max-height: 120px;
+}
+
+/* =====================
+   ABOUT — Row 1: image left | Row 2: .about-row--reverse swaps columns
+===================== */
+.about {
+    padding: 4rem 3rem;
+    background: var(--bg-about);
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.about h2 {
+    color: var(--primary-color);
+    margin-bottom: 2.5rem;
+    font-size: clamp(20px, 3vw, 32px);
+}
+
+.about-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.about-row--reverse .about-visual {
+    order: 2;
+}
+
+.about-row--reverse .about-content {
+    order: 1;
+}
+
+.about-visual .asset-panel {
+    min-height: 220px;
+}
+
+.about-visual .asset-panel img {
+    max-height: 200px;
+}
+
+.about-content h3 {
+    color: var(--secondary-color);
+    font-size: 22px;
+    margin-bottom: 14px;
+}
+
+.about-content p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-body);
+    margin-bottom: 1rem;
+}
+
+.about-highlights {
+    margin-top: 1rem;
+    padding: 24px;
+    background: #fff;
+    border: var(--border-size) solid var(--border-dark);
+    box-shadow: var(--shadow-brutal);
+}
+
+.about-highlights .highlight-title {
+    color: var(--secondary-color);
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.about-highlights ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.about-highlights ul li {
+    font-size: 15px;
+    margin-bottom: 12px;
+    line-height: 1.7;
+    color: var(--text-body);
+    padding-left: 24px;
+    position: relative;
+}
+
+.about-highlights ul li::before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.about-highlights ul li strong {
+    color: var(--primary-color);
+}
+
+/* =====================
+   PRICING — Three cards; .price-card--featured = 10% larger Premium tier
+   Edit prices in HTML (.price-number); kerning: .dollar-sign, .price-number
+===================== */
+.pricing {
+    padding: 4rem 3rem;
+    background: var(--bg-pricing);
+    text-align: center;
+}
+
+.pricing h2 {
+    color: var(--secondary-color);
+    margin-bottom: 2.5rem;
+    font-size: clamp(20px, 3vw, 32px);
+}
+
+.pricing-cards {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.price-card {
+    position: relative;
+    background: #fff;
+    padding: 28px 22px;
+    width: 260px;
+    border: var(--border-size) solid var(--border-dark);
+    box-shadow: var(--shadow-brutal);
+    transition: var(--transition);
+    flex: 0 1 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.price-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 0 var(--border-dark);
+}
+
+.price-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 22px;
+}
+
+.price-display {
+    color: var(--secondary-color);
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 18px;
+    display: inline-flex;
+    align-items: baseline;
+    line-height: 1;
+    letter-spacing: 0;
+    gap: 0;
+    white-space: nowrap;
+}
+
+.dollar-sign {
+    margin-right: -0.12em;
+}
+
+.price-number {
+    letter-spacing: -0.06em;
+    margin-left: -0.04em;
+}
+
+.price-period {
+    font-size: 16px;
+    font-weight: 700;
+    margin-left: 0.05em;
+    color: var(--text-body);
+    letter-spacing: 0;
+}
+
+.price-card ul {
+    list-style: none;
+    text-align: left;
+    width: 100%;
+    margin-bottom: 22px;
+    flex: 1;
+}
+
+.price-card li {
+    font-size: 14px;
+    margin: 10px 0;
+    padding-left: 22px;
+    position: relative;
+    line-height: 1.55;
+    color: var(--text-body);
+}
+
+.price-card li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: 800;
+}
+
+.price-card--featured {
+    transform: scale(1.1);
+    z-index: 2;
+    border-color: var(--primary-color);
+    background: linear-gradient(180deg, #fff 0%, #fff5fb 100%);
+}
+
+.price-card--featured::after {
+    content: "★ BEST ★";
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-color);
+    color: white;
+    padding: 6px 14px;
+    border: var(--border-size) solid var(--border-dark);
+    box-shadow: var(--shadow-brutal-sm);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.price-card--featured:hover {
+    transform: scale(1.1) translate(-2px, -2px);
+}
+
+.price-btn {
+    width: 100%;
+    background: var(--secondary-color);
+    color: white;
+    margin-top: auto;
+}
+
+.price-btn--featured {
+    background: var(--primary-color);
+}
+
+/* =====================
+   FOOTER — #contact section (email, socials in index.html)
+===================== */
+footer {
+    background: linear-gradient(135deg, var(--light-pink) 0%, #ffe4f1 100%);
+    color: var(--text-dark);
+    text-align: center;
+    padding: 4rem 2rem 2rem;
+    border-top: var(--border-size) solid var(--border-dark);
+}
+
+footer h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.25rem;
+    font-size: 22px;
+}
+
+footer p {
+    font-size: 15px;
+    margin: 8px 0;
+    color: var(--text-body);
+}
+
+.socials {
+    margin: 1.75rem 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.socials a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 16px;
+    border: var(--border-size) solid var(--border-dark);
+    box-shadow: var(--shadow-brutal-sm);
+    background: #fff;
+    transition: var(--transition);
+}
+
+.socials a:hover,
+.socials a:focus {
+    color: white;
+    background: var(--primary-color);
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 0 var(--border-dark);
+    outline: none;
+}
+
+.copyright {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid rgba(44, 27, 61, 0.2);
+    font-size: 13px !important;
+}
+
+/* =====================
+   RESPONSIVE — stacks layout on smaller screens (do not delete)
+   1024px: tablet | 768px: mobile menu + single column | 480px: small phones
+===================== */
+@media (max-width: 1024px) {
+    .hero {
+        grid-template-columns: 1fr 1fr;
+        padding: 3rem 2rem;
+    }
+
+    .bento-card--pet {
+        grid-column: span 3;
+        grid-row: span 2;
+    }
+
+    .bento-card--decorate,
+    .bento-card--care {
+        grid-column: span 3;
+    }
+
+    .bento-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    .price-card--featured {
+        transform: scale(1.08);
+    }
+
+    .price-card--featured:hover {
+        transform: scale(1.08) translate(-2px, -2px);
+    }
+}
+
+@media (max-width: 768px) {
+    .float-pet {
+        opacity: 0.2;
+        width: 40px;
+    }
+
+    .logo {
+        font-size: 16px;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background: rgba(255, 228, 241, 0.98);
+        backdrop-filter: blur(10px);
+        position: absolute;
+        top: 100%;
+        right: 12px;
+        width: 200px;
+        padding: 12px;
+        border: var(--border-size) solid var(--border-dark);
+        box-shadow: var(--shadow-brutal);
+        z-index: 200;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 2.5rem 1.5rem;
+        gap: 2rem;
+    }
+
+    .hero-description {
+        max-width: none;
+    }
+
+    .hero-cta-group {
+        justify-content: center;
+    }
+
+    .hero-mockup {
+        order: -1;
+    }
+
+    .mockup-stack {
+        max-width: 300px;
+        min-height: 260px;
+    }
+
+    .bento-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bento-card--pet,
+    .bento-card--decorate,
+    .bento-card--care {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .about-row,
+    .about-row--reverse {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .about-row--reverse .about-visual,
+    .about-row--reverse .about-content {
+        order: unset;
+    }
+
+    .pricing-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .price-card {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .price-card--featured {
+        transform: scale(1);
+        order: -1;
+    }
+
+    .price-card--featured:hover {
+        transform: translate(-2px, -2px);
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.75rem 1rem;
+    }
+
+    .hero {
+        padding: 2rem 1rem;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+        width: 100%;
+    }
+
+    .features,
+    .about,
+    .pricing {
+        padding: 2.5rem 1rem;
+    }
+
+    .device--mobile {
+        right: 0;
+        width: 42%;
+    }
+}

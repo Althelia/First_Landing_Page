@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  PIXOPET LANDING PAGE — index.html
+  =================================
+  PURPOSE: Main page content. Content editors should change TEXT and IMAGE PATHS here.
+  STYLING: See style.css (colors, layout, borders).
+  INTERACTIVITY: See script.js (mobile menu, pet carousel rotation).
+
+  QUICK EDIT MAP:
+  - Lines ~6-9   : Browser tab title & search description (meta tags)
+  - Lines ~24-31 : Navigation menu labels & section links
+  - Lines ~40-76 : Hero headline, description, buttons, mockup images
+  - Lines ~78-109: Key Features (bento cards) — titles, text, images
+  - Lines ~111-160: About section — story text, images, bullet list
+  - Lines ~162-209: Pricing plans — prices, features, button labels
+  - Lines ~211-223: Footer contact & social links
+
+  IMAGES: Put files in the "image/" folder. Use src="image/your-file.png"
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- EDIT: Text shown in Google/search results -->
+    <meta name="description" content="PixoPet - A relaxing pixel-style virtual pet game where you can choose your pet, decorate its home, and watch it grow.">
+    <meta name="keywords" content="virtual pet, pixel game, pet care, casual game">
+    <meta name="author" content="PixoPet Team">
+    <!-- EDIT: Browser tab title -->
+    <title>PixoPet | Your Pixel Pet</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Fonts: Press Start 2P (headlines) + Nunito (body). Change only if you know web fonts. -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!--
+  BACKGROUND DECORATION (optional)
+  Purpose: Small floating pet sprites behind the page. Does not affect layout.
+  EDIT: Change src on each <img> to swap sprites. alt="" is intentional (decorative only).
+-->
+<div class="parallax-pets" aria-hidden="true">
+    <img src="image/cats.png" alt="" class="float-pet float-pet--1">
+    <img src="image/Dogs.png" alt="" class="float-pet float-pet--2">
+    <img src="image/Bird.png" alt="" class="float-pet float-pet--3">
+    <img src="image/fish.png" alt="" class="float-pet float-pet--4">
+</div>
+
+<!--
+  HEADER / NAVIGATION
+  Purpose: Sticky top bar; links jump to sections (#home, #features, etc.).
+  EDIT: Logo text, menu item labels. href must match section id on the page.
+  Mobile menu behavior is controlled in script.js (no edit needed for basic text changes).
+-->
+<header>
+    <nav class="navbar">
+        <h1 class="logo">PixoPet</h1>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
+    </nav>
+</header>
+
+<main>
+
+<!--
+  HERO SECTION (id="home")
+  Layout: 60% text left | 40% device mockups right (see .hero in style.css).
+  EDIT: All headings, paragraphs, button labels, and mockup image paths below.
+-->
+<section id="home" class="hero">
+    <article class="hero-text">
+        <!-- Pixel-style main headline (only h1/h2 use pixel font) -->
+        <h2>PixoPet, Your Pixel Pet</h2>
+        <!-- Short tagline under the headline -->
+        <p class="hero-tagline">Choose a pet. Build its home. Watch it grow.</p>
+        <!-- Longer intro paragraph -->
+        <p class="hero-description">
+            PixoPet is a pixel-style virtual pet game where you can choose your own home pet,
+            take care of it every day, decorate its home, and help it grow through fun activities.
+            Feed, play, and customize your pet while enjoying a relaxing retro pixel experience
+            designed for casual players and pet lovers of all ages.
+        </p>
+        <div class="hero-cta-group">
+            <!-- EDIT: Button text only. Linking to signup URLs would need extra HTML (href or onclick). -->
+            <button class="primary-btn" type="button">Get Started</button>
+            <button class="secondary-btn" type="button">Learn More</button>
+        </div>
+    </article>
+
+    <!--
+      HERO MOCKUPS — desktop + phone frames showing the game
+      EDIT: Replace src with your screenshots (keep files in image/ folder).
+      Desktop screen: wide gameplay shot. Mobile screen: logo or portrait screenshot.
+    -->
+    <div class="hero-mockup">
+        <div class="mockup-stack">
+            <div class="device device--desktop">
+                <div class="device-chrome">
+                    <span class="device-dot"></span>
+                    <span class="device-dot"></span>
+                    <span class="device-dot"></span>
+                </div>
+                <div class="device-screen">
+                    <img src="image/home.jpg" alt="PixoPet game on desktop">
+                </div>
+            </div>
+            <div class="device device--mobile">
+                <div class="device-notch" aria-hidden="true"></div>
+                <div class="device-screen">
+                    <img src="image/logo.png" alt="PixoPet game on mobile">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+  KEY FEATURES — Bento grid layout
+  Purpose: Three selling points in interlocking cards.
+  - Wide left card: rotating pet carousel (images also listed in script.js petImages)
+  - Top-right: decorate home | Bottom-right: care & level up
+  EDIT: h3 titles, p descriptions, img src and alt text per card.
+-->
+<section id="features" class="features">
+    <h2>Key Features</h2>
+    <div class="bento-grid">
+
+        <!-- CARD 1 — Choose Your Pet (large card + auto-rotating images) -->
+        <article class="bento-card bento-card--pet">
+            <div class="asset-panel asset-panel--carousel">
+                <div class="pet-image-container">
+                    <!-- First image shown before carousel runs; full list in script.js -->
+                    <img id="pet-feature-img" src="image/cats.png" alt="Rotating selection of pixel pets">
+                </div>
+            </div>
+            <h3>Choose Your Pet</h3>
+            <p>Select from cats, dogs, birds, and more cute pixel pets.</p>
+        </article>
+
+        <!-- CARD 2 — Decorate -->
+        <article class="bento-card bento-card--decorate">
+            <div class="asset-panel">
+                <img src="image/home.jpg" alt="Decorate your pet's pixel home">
+            </div>
+            <h3>Decorate Their Home</h3>
+            <p>Customize your pet's personal home with furniture and colors.</p>
+        </article>
+
+        <!-- CARD 3 — Care -->
+        <article class="bento-card bento-card--care">
+            <div class="asset-panel">
+                <img src="image/Supplies.png" alt="Care supplies for your pet">
+            </div>
+            <h3>Care &amp; Level Up</h3>
+            <p>Feed, clean, and play to help your pet grow stronger.</p>
+        </article>
+
+    </div>
+</section>
+
+<!--
+  ABOUT SECTION
+  Layout: Row 1 = image left, text right | Row 2 = text left, image right (class about-row--reverse).
+  EDIT: Section title, subheadings (h3), paragraphs, bullet list, and both about images.
+-->
+<section id="about" class="about">
+    <h2>About PixoPet</h2>
+
+    <div class="about-row">
+        <div class="about-visual">
+            <div class="asset-panel">
+                <img src="image/logo.png" alt="PixoPet mascot">
+            </div>
+        </div>
+        <div class="about-content">
+            <h3>Classic comfort, modern play</h3>
+            <p>
+                PixoPet is a relaxing and fun virtual pet game inspired by classic pet games.
+                Players can adopt and care for a variety of adorable pets, each with their own
+                personalities and traits.
+            </p>
+        </div>
+    </div>
+
+    <div class="about-row about-row--reverse">
+        <div class="about-content">
+            <h3>Grow, decorate, discover</h3>
+            <p>
+                Feed, play with, and nurture your pets while decorating their cozy rooms with
+                furniture, wallpapers, and fun accessories. As your pets grow, you unlock new
+                activities, rewards, and items—including mini-games, seasonal events, and hidden surprises.
+            </p>
+            <p>
+                Designed for all ages, PixoPet encourages creativity, responsibility, and daily
+                interaction, offering endless enjoyment for casual gamers and pet lovers alike.
+            </p>
+        </div>
+        <div class="about-visual">
+            <div class="asset-panel">
+                <img src="image/Supplies.png" alt="Pet care items in PixoPet">
+            </div>
+        </div>
+    </div>
+
+    <div class="about-highlights">
+        <p class="highlight-title">Highlights Included:</p>
+        <ul>
+            <!-- EDIT: Add/remove <li> rows. Keep <strong>Label:</strong> format for consistency. -->
+            <li><strong>Variety of pets:</strong> A variety of unique pets, each with their own personalities and needs.</li>
+            <li><strong>Caring &amp; interaction:</strong> Feed, play, and bond with your pets daily to help them develop new skills.</li>
+            <li><strong>Room customization:</strong> Build and decorate a room that reflects your creativity.</li>
+            <li><strong>Mini-games and fun activities:</strong> Play mini-games, join seasonal events, and discover hidden rewards.</li>
+            <li><strong>Growth and rewards:</strong> Unlock surprises, earn items, and watch your pets grow and develop.</li>
+        </ul>
+    </div>
+</section>
+
+<!--
+  PRICING SECTION
+  Purpose: Three plan cards. Middle card (Premium) is visually larger — class price-card--featured.
+  EDIT: Plan names (h3), price numbers, feature bullets, button labels.
+  Price format: change only the number inside <span class="price-number">.
+-->
+<section id="pricing" class="pricing">
+    <h2>Pricing Plans</h2>
+    <div class="pricing-cards">
+
+        <!-- FREE TIER -->
+        <div class="price-card">
+            <h3>Free</h3>
+            <p class="price-display" aria-label="0 dollars per month">
+                <span class="dollar-sign">$</span><span class="price-number">0</span><span class="price-period">/month</span>
+            </p>
+            <ul>
+                <li>1 regular pet</li>
+                <li>Basic items</li>
+                <li>Basic decorations</li>
+            </ul>
+            <button class="price-btn" type="button">Start Free</button>
+        </div>
+
+        <!-- PREMIUM TIER (highlighted — do not remove price-card--featured class) -->
+        <div class="price-card price-card--featured">
+            <h3>Premium</h3>
+            <p class="price-display" aria-label="5 dollars per month">
+                <span class="dollar-sign">$</span><span class="price-number">5</span><span class="price-period">/month</span>
+            </p>
+            <ul>
+                <li>Daily rewards</li>
+                <li>Unlimited pets</li>
+                <li>All decorations</li>
+                <li>1 name pet card</li>
+                <li>No ads</li>
+            </ul>
+            <button class="price-btn price-btn--featured" type="button">Upgrade Now</button>
+        </div>
+
+        <!-- DELUXE TIER -->
+        <div class="price-card">
+            <h3>Deluxe</h3>
+            <p class="price-display" aria-label="10 dollars per month">
+                <span class="dollar-sign">$</span><span class="price-number">10</span><span class="price-period">/month</span>
+            </p>
+            <ul>
+                <li>Premium Plan</li>
+                <li>Rare/exotic pets</li>
+                <li>Special seasonal home sets</li>
+                <li>Unlimited name pet card</li>
+            </ul>
+            <button class="price-btn" type="button">Go Deluxe</button>
+        </div>
+
+    </div>
+</section>
+
+<!--
+  FOOTER / CONTACT (id="contact" — linked from nav "Contact")
+  EDIT: Email, phone, social link text and href="#" URLs, copyright year/name.
+-->
+<footer id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: support@pixopet.com</p>
+    <p>Phone: 0912-345-6789</p>
+
+    <div class="socials">
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+    </div>
+
+    <p class="copyright">© 2026 PixoPet. All rights reserved.</p>
+</footer>
+
+</main>
+
+<!-- Loads menu toggle, pet carousel, and smooth scroll — edit script.js for carousel images/speed -->
+<script src="script.js"></script>
+
+</body>
+</html>
